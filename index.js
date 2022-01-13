@@ -1,4 +1,11 @@
 const bombs = [];
+let gamePoints=0;
+let canPlay=true;
+
+function updateGamePoints(){
+    const gamePointsElement = document.getElementById("gamePoints");
+    gamePointsElement.innerHTML = "Game Points"+gamePoints;
+}
 
 function addGrid() {
   const appElement = document.getElementById("app");
@@ -14,15 +21,18 @@ function addGrid() {
       column.style.textAlign = "center";
       column.style.verticalAlign = "middle";
       column.setAttribute("index", index);
-
         column.addEventListener("click",function(){
+            if(canPlay){
             if(bombs.includes(index)){
-                column.innerHTML = "💣";
                 column.style.backgroundColor = "red";
+                canPlay=false;
             }
             else{
                 column.style.background="green";
+                gamePoints++;
+                updateGamePoints();
             }
+        }
         })
 
       row.appendChild(column);
@@ -45,3 +55,9 @@ function generateBombs() {
 addGrid();
 generateBombs();
 console.log(bombs);
+
+// Show all the Bombs once a bomb is clicked
+// Give a button to start the game again
+// Every column should be only clickable once
+//if all normal cells are clicked and none is left then show alert that you won
+//if a bomb is clicked then show alert that you lost
